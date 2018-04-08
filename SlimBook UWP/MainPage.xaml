@@ -53,7 +53,7 @@
         </Grid>
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <ProgressRing x:Name="ProgRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="60" Foreground="#FF3B5998" Canvas.ZIndex="1" IsActive="True"/>
-            <WebView x:Name="facebookWebView"  Source="https://touch.facebook.com/home.php"/>
+            <WebView x:Name="SlimBookUWPWebView"  Source="https://touch.facebook.com/home.php"/>
         </Grid>
     </Grid>
 </Page>

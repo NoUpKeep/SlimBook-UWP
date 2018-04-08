@@ -16,7 +16,7 @@ Public NotInheritable Class MainPage
     Private Sub Home()
         Dim mwv As Uri
         mwv = New Uri(MyWebViewSource & "?sk=h_chr")
-        facebookWebView.Navigate(New Uri(MyWebViewSource))
+        SlimBookUWPWebView.Navigate(New Uri(MyWebViewSource))
     End Sub
 
     Private Async Sub CloseApp()
@@ -38,7 +38,7 @@ Public NotInheritable Class MainPage
         If CInt(result.Id) = 0 Then Application.Current.[Exit]()
     End Sub
 
-    Private Async Sub facebookWebView_LoadCompleted(sender As Object, e As NavigationEventArgs) Handles facebookWebView.LoadCompleted
+    Private Async Sub SlimBookUWPWebView_LoadCompleted(sender As Object, e As NavigationEventArgs) Handles SlimBookUWPWebView.LoadCompleted
         Dim cssToApply As String = ""
         cssToApply += "#header {position: fixed; z-index: 12; top: 0px;} #root {padding-top: 44px;} .item.more {position:fixed; bottom: 0px; text-align: center !important;}"
         Dim h = ApplicationView.GetForCurrentView().VisibleBounds.Height - 44
@@ -46,8 +46,8 @@ Public NotInheritable Class MainPage
         Dim barHeight As Integer = CInt((h / density))
         cssToApply += ".flyout {max-height:" & barHeight & "px; overflow-y:scroll;}"
         cssToApply += "#m_newsfeed_stream article[data-ft*=""\\""ei\\"":\\""""] {display:none !important;}"
-        Await facebookWebView.InvokeScriptAsync("eval", {"javascript:function addStyleString(str) { var node = document.createElement('style'); node.innerHTML = " & "str; document.body.appendChild(node); } addStyleString('" & cssToApply & "');"})
-        If Not facebookWebView.CanGoBack Then
+        Await SlimBookUWPWebView.InvokeScriptAsync("eval", {"javascript:function addStyleString(str) { var node = document.createElement('style'); node.innerHTML = " & "str; document.body.appendChild(node); } addStyleString('" & cssToApply & "');"})
+        If Not SlimBookUWPWebView.CanGoBack Then
             abbBack.Label = "Exit"
         Else
             abbBack.Label = "Back"
@@ -58,8 +58,8 @@ Public NotInheritable Class MainPage
     Private Sub MainPage_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         Me.InitializeComponent()
         If localSettings.Values.ContainsKey("fullScreen") Then
-            If CBool(localSettings.Values("fullScreen")) Then view.TryEnterFullScreenMode()
-        Else view.ExitFullScreenMode()
+            If CBool(localSettings.Values("fullScreen")) Then View.TryEnterFullScreenMode()
+        Else View.ExitFullScreenMode()
         End If
         _Setting.Visibility = Visibility.Collapsed
         ProgRing.IsActive = True
@@ -67,7 +67,7 @@ Public NotInheritable Class MainPage
 
     Private Sub abbRefresh_Click(sender As Object, e As RoutedEventArgs) Handles abbRefresh.Click
         ProgRing.IsActive = True
-        facebookWebView.Refresh()
+        SlimBookUWPWebView.Refresh()
     End Sub
 
     Private Sub abbHome_Click(sender As Object, e As RoutedEventArgs) Handles abbHome.Click
@@ -81,8 +81,8 @@ Public NotInheritable Class MainPage
     End Sub
 
     Private Sub abbBack_Click(sender As Object, e As RoutedEventArgs) Handles abbBack.Click
-        If facebookWebView.CanGoBack Then
-            facebookWebView.GoBack()
+        If SlimBookUWPWebView.CanGoBack Then
+            SlimBookUWPWebView.GoBack()
         Else
             Application.Current.Exit()
         End If
@@ -113,5 +113,15 @@ Public NotInheritable Class MainPage
     Private Async Sub hyperDev_Click(sender As Object, e As RoutedEventArgs) Handles hyperDev.Click
         Dim logoURL = New Uri("https://github.com/CelestialDoom/SlimBook-UWP")
         Await Windows.System.Launcher.LaunchUriAsync(logoURL)
+    End Sub
+
+    Private Async Sub abbOpenSource_Click(sender As Object, e As RoutedEventArgs) Handles abbOpenSource.Click
+        Dim logoURL = New Uri("https://github.com/CelestialDoom/SlimBook-UWP")
+        Await Windows.System.Launcher.LaunchUriAsync(logoURL)
+    End Sub
+
+    Private Async Sub abbUp_Click(sender As Object, e As RoutedEventArgs) Handles abbUp.Click
+        Dim ScrollToTopString = "var int = setInterval(function(){window.scrollBy(0, -36); if( window.pageYOffset === 0 ) clearInterval(int); }, 0.1);"
+        Await myWebView.InvokeScriptAsync("eval", New String() {ScrollToTopString})
     End Sub
 End Class
