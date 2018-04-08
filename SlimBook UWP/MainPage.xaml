@@ -11,7 +11,6 @@
         <CommandBar VerticalAlignment="Bottom" Background="#FF3B5998" Foreground="White" Canvas.ZIndex="1">
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="abbAbout" Label="About" Foreground="White" Background="#FF3B5998"/>
-                <AppBarButton x:Name="abbSettings" Label="Settings" Foreground="White" Background="#FF3B5998"/>
                 <AppBarButton x:Name="abbOpenSource" Label="Github" Foreground="White" Background="#FF3B5998"/>
             </CommandBar.SecondaryCommands>
             <CommandBar.Content>
@@ -23,31 +22,13 @@
             <AppBarButton x:Name="abbHome" Icon="Home" Label="Home" Foreground="White"/>
             <AppBarButton x:Name="abbFullscreen" Icon="FullScreen" Label="Full Screen" Foreground="White" Visibility="Collapsed"/>
         </CommandBar>        
-        <Grid x:Name="_Setting" Background="#FF3B5998" Canvas.ZIndex="1" Visibility="Visible">
+        <Grid x:Name="_Setting" Background="#FF3B5998" Canvas.ZIndex="1" Visibility="Collapsed">
             <Grid x:Name="_SETTINGS_B" VerticalAlignment="Top" Height="50" BorderThickness="0" BorderBrush="Black">
                 <Button x:Name="btnSETTINGS_X" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
                     Width="50" Height="50" Background="Transparent" VerticalAlignment="Top" Margin="0" FontSize="22" Foreground="White" HorizontalAlignment="Right" Canvas.ZIndex="2"/>
                 <TextBlock x:Name="txtSETTINGSTitle" Margin="10,0" TextWrapping="Wrap" Text="TEXT" VerticalAlignment="Center" FontSize="24" Height="Auto" Foreground="White" />
             </Grid>
             <Pivot x:Name="PivotSettingsAbout" Margin="0,50,0,0" Foreground="White">
-                <PivotItem x:Name="_PivotSettings" Header="Settings" Foreground="White">
-                    <ScrollViewer x:Name="myScrollView_Settings" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="10,10,10,10" BorderThickness="2" BorderBrush="White" Foreground="White">
-                        <StackPanel>
-                            <StackPanel>
-                                <ToggleSwitch x:Name="FullScreen" Header="Full Screen" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel>
-                                <ToggleSwitch x:Name="BlockTopBar" Header="Lock Facebook bar" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel>
-                                <ToggleSwitch x:Name="ShowRecentNews" Header="Show Recent Posts" Foreground="White"/>
-                            </StackPanel>
-                            <StackPanel>
-                                <ToggleSwitch x:Name="HideAds" Header="Hide Sponsored Posts" Foreground="White"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
-                </PivotItem>
                 <PivotItem x:Name="_PivotAbout" Header="About" Foreground="White">
                         <StackPanel>
                         <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png"/>
@@ -72,7 +53,7 @@
         </Grid>
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <ProgressRing x:Name="ProgRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="60" Foreground="#FF3B5998" Canvas.ZIndex="1" IsActive="True"/>
-            <WebView x:Name="facebookWebView"  Source="https://touch.facebook.com/home.php"/>
+            <WebView x:Name="SlimBookUWPWebView"  Source="https://touch.facebook.com/home.php"/>
         </Grid>
     </Grid>
 </Page>

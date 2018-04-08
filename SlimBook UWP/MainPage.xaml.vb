@@ -16,7 +16,7 @@ Public NotInheritable Class MainPage
     Private Sub Home()
         Dim mwv As Uri
         mwv = New Uri(MyWebViewSource & "?sk=h_chr")
-        facebookWebView.Navigate(New Uri(MyWebViewSource))
+        SlimBookUWPWebView.Navigate(New Uri(MyWebViewSource))
     End Sub
 
     Private Async Sub CloseApp()
@@ -38,23 +38,16 @@ Public NotInheritable Class MainPage
         If CInt(result.Id) = 0 Then Application.Current.[Exit]()
     End Sub
 
-    Private Async Sub facebookWebView_LoadCompleted(sender As Object, e As NavigationEventArgs) Handles facebookWebView.LoadCompleted
+    Private Async Sub SlimBookUWPWebView_LoadCompleted(sender As Object, e As NavigationEventArgs) Handles SlimBookUWPWebView.LoadCompleted
         Dim cssToApply As String = ""
-        If localSettings.Values.ContainsKey("LockTopBar") Then
-
-            If CBool(localSettings.Values("LockTopBar")) Then
-                cssToApply += "#header {position: fixed; z-index: 12; top: 0px;} #root {padding-top: 44px;} .item.more {position:fixed; bottom: 0px; text-align: center !important;}"
-                Dim h = ApplicationView.GetForCurrentView().VisibleBounds.Height - 44
-                Dim density As Single = DisplayInformation.GetForCurrentView().LogicalDpi
-                Dim barHeight As Integer = CInt((h / density))
-                cssToApply += ".flyout {max-height:" & barHeight & "px; overflow-y:scroll;}"
-            End If
-        End If
-
-        If localSettings.Values.ContainsKey("hideAds") Then
-            If CBool(localSettings.Values("hideAds")) Then cssToApply += "#m_newsfeed_stream article[data-ft*=""\\""ei\\"":\\""""] {display:none !important;}"
-        End If
-        If Not facebookWebView.CanGoBack Then
+        cssToApply += "#header {position: fixed; z-index: 12; top: 0px;} #root {padding-top: 44px;} .item.more {position:fixed; bottom: 0px; text-align: center !important;}"
+        Dim h = ApplicationView.GetForCurrentView().VisibleBounds.Height - 44
+        Dim density As Single = DisplayInformation.GetForCurrentView().LogicalDpi
+        Dim barHeight As Integer = CInt((h / density))
+        cssToApply += ".flyout {max-height:" & barHeight & "px; overflow-y:scroll;}"
+        cssToApply += "#m_newsfeed_stream article[data-ft*=""\\""ei\\"":\\""""] {display:none !important;}"
+        Await SlimBookUWPWebView.InvokeScriptAsync("eval", {"javascript:function addStyleString(str) { var node = document.createElement('style'); node.innerHTML = " & "str; document.body.appendChild(node); } addStyleString('" & cssToApply & "');"})
+        If Not SlimBookUWPWebView.CanGoBack Then
             abbBack.Label = "Exit"
         Else
             abbBack.Label = "Back"
@@ -65,8 +58,8 @@ Public NotInheritable Class MainPage
     Private Sub MainPage_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         Me.InitializeComponent()
         If localSettings.Values.ContainsKey("fullScreen") Then
-            If CBool(localSettings.Values("fullScreen")) Then view.TryEnterFullScreenMode()
-        Else view.ExitFullScreenMode()
+            If CBool(localSettings.Values("fullScreen")) Then View.TryEnterFullScreenMode()
+        Else View.ExitFullScreenMode()
         End If
         _Setting.Visibility = Visibility.Collapsed
         ProgRing.IsActive = True
@@ -74,7 +67,7 @@ Public NotInheritable Class MainPage
 
     Private Sub abbRefresh_Click(sender As Object, e As RoutedEventArgs) Handles abbRefresh.Click
         ProgRing.IsActive = True
-        facebookWebView.Refresh()
+        SlimBookUWPWebView.Refresh()
     End Sub
 
     Private Sub abbHome_Click(sender As Object, e As RoutedEventArgs) Handles abbHome.Click
@@ -82,48 +75,34 @@ Public NotInheritable Class MainPage
     End Sub
 
     Private Sub abbAbout_Click(sender As Object, e As RoutedEventArgs) Handles abbAbout.Click
-        'ShowAbout("About", "More stuff will be added into this dialog, just as soon as I work out what to put into it.")
-        PivotSettingsAbout.SelectedIndex = 1
+        PivotSettingsAbout.SelectedIndex = 0
+        ShowSettings("About SlimBook UWP")
         _Setting.Visibility = Visibility.Visible
     End Sub
 
     Private Sub abbBack_Click(sender As Object, e As RoutedEventArgs) Handles abbBack.Click
-        If facebookWebView.CanGoBack Then
-            facebookWebView.GoBack()
+        If SlimBookUWPWebView.CanGoBack Then
+            SlimBookUWPWebView.GoBack()
         Else
-            'CloseApp()
             Application.Current.Exit()
         End If
     End Sub
 
     Private Sub ShowSettings(ByVal title As String)
         PivotSettingsAbout.SelectedIndex = 0
-        myScrollView_Settings.ChangeView(Nothing, 0, Nothing, True)
         _Setting.Visibility = Visibility.Visible
         txtSETTINGSTitle.Text = title
         SettingsSetup()
     End Sub
 
-    Private Sub abbSettings_Click(sender As Object, e As RoutedEventArgs) Handles abbSettings.Click
-        ShowSettings("Settings")
-    End Sub
-
     Private Sub btnSETTINGS_X_Click(sender As Object, e As RoutedEventArgs) Handles btnSETTINGS_X.Click
         _Setting.Visibility = Visibility.Collapsed
-        If localSettings.Values.ContainsKey("fullScreen") Then
-            If CBool(localSettings.Values("fullScreen")) Then View.TryEnterFullScreenMode()
-        Else View.ExitFullScreenMode()
-        End If
     End Sub
 
     Private Sub SettingsSetup()
         Dim number As PackageVersion = Package.Current.Id.Version
         version.Text = String.Format(" {0}.{1}.{2}" & vbCrLf, number.Major, number.Minor, number.Build)
         privacy.Text = PrivacyInfo
-        If localSettings.Values.ContainsKey("fullScreen") Then FullScreen.IsOn = CBool(localSettings.Values("fullScreen"))
-        If localSettings.Values.ContainsKey("LockTopBar") Then BlockTopBar.IsOn = CBool(localSettings.Values("LockTopBar"))
-        If localSettings.Values.ContainsKey("ShowRecentPosts") Then ShowRecentNews.IsOn = CBool(localSettings.Values("ShowRecentPosts"))
-        If localSettings.Values.ContainsKey("hideAds") Then HideAds.IsOn = CBool(localSettings.Values("hideAds"))
     End Sub
 
     Private Async Sub hyperLogo_Click(sender As Object, e As RoutedEventArgs) Handles hyperLogo.Click
@@ -132,46 +111,17 @@ Public NotInheritable Class MainPage
     End Sub
 
     Private Async Sub hyperDev_Click(sender As Object, e As RoutedEventArgs) Handles hyperDev.Click
-        Dim logoURL = New Uri("https://github.com/CelestialDoom")
+        Dim logoURL = New Uri("https://github.com/CelestialDoom/SlimBook-UWP")
         Await Windows.System.Launcher.LaunchUriAsync(logoURL)
     End Sub
 
-    Private Sub FullScreen_Toggled(sender As Object, e As RoutedEventArgs) Handles FullScreen.Toggled
-        If Not localSettings.Values.ContainsKey("fullscreen") Then
-            localSettings.Values.Add("fullscreen", FullScreen.IsOn)
-        Else
-            localSettings.Values("fullscreen") = FullScreen.IsOn
-        End If
-        If localSettings.Values.ContainsKey("fullScreen") Then
-            If CBool(localSettings.Values("fullScreen")) Then
-                View.TryEnterFullScreenMode()
-            Else
-                View.ExitFullScreenMode()
-            End If
-        End If
+    Private Async Sub abbOpenSource_Click(sender As Object, e As RoutedEventArgs) Handles abbOpenSource.Click
+        Dim logoURL = New Uri("https://github.com/CelestialDoom/SlimBook-UWP")
+        Await Windows.System.Launcher.LaunchUriAsync(logoURL)
     End Sub
 
-    Private Sub BlockTopBar_Toggled(sender As Object, e As RoutedEventArgs) Handles BlockTopBar.Toggled
-        If Not localSettings.Values.ContainsKey("LockTopBar") Then
-            localSettings.Values.Add("LockTopBar", FullScreen.IsOn)
-        Else
-            localSettings.Values("LockTopBar") = FullScreen.IsOn
-        End If
-    End Sub
-
-    Private Sub ShowRecentNews_Toggled(sender As Object, e As RoutedEventArgs) Handles ShowRecentNews.Toggled
-        If Not localSettings.Values.ContainsKey("ShowRecentPosts") Then
-            localSettings.Values.Add("ShowRecentPosts", FullScreen.IsOn)
-        Else
-            localSettings.Values("ShowRecentPosts") = FullScreen.IsOn
-        End If
-    End Sub
-
-    Private Sub HideAds_Toggled(sender As Object, e As RoutedEventArgs) Handles HideAds.Toggled
-        If Not localSettings.Values.ContainsKey("hideAds") Then
-            localSettings.Values.Add("hideAds", FullScreen.IsOn)
-        Else
-            localSettings.Values("hideAds") = FullScreen.IsOn
-        End If
+    Private Async Sub abbUp_Click(sender As Object, e As RoutedEventArgs) Handles abbUp.Click
+        Dim ScrollToTopString = "var int = setInterval(function(){window.scrollBy(0, -36); if( window.pageYOffset === 0 ) clearInterval(int); }, 0.1);"
+        Await myWebView.InvokeScriptAsync("eval", New String() {ScrollToTopString})
     End Sub
 End Class
