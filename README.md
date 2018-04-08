@@ -40,10 +40,9 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 - see th
 
 ## Acknowledgments
 
-* How Many Peopl Are In Space Right Now API (http://www.howmanypeopleareinspacerightnow.com/peopleinspace.json)
-* [Telerik Code Converter](http://converter.telerik.com/)
 * Icon Archive [Book Icon from Icon Archive](http://www.iconarchive.com/show/outline-icons-by-iconsmind/Book-icon.html)
 * SlimSocial for Facebook UWP - This was the inspiration for this app. [SlimSocial for Facebook UWP](https://github.com/rignaneseleo/SlimSocial-for-Facebook-UWP)
+* [Telerik Code Converter](http://converter.telerik.com/)
 * Hat tip to anyone who's code was used
 * Inspiration
 * etc
