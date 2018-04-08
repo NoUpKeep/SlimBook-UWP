@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="SlimBook_UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SlimBook_UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <CommandBar VerticalAlignment="Bottom" Background="#FF3B5998" Foreground="White" Canvas.ZIndex="1">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="abbAbout" Label="About" Foreground="White" Background="#FF3B5998"/>
+                <AppBarButton x:Name="abbSettings" Label="Settings" Foreground="White" Background="#FF3B5998"/>
+                <AppBarButton x:Name="abbOpenSource" Label="Github" Foreground="White" Background="#FF3B5998"/>
+            </CommandBar.SecondaryCommands>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="abbBack" Icon="Back" Label="Back" Foreground="White"/>
+            <AppBarButton x:Name="abbUp" Icon="Up" Label="Top" Foreground="White"/>
+            <AppBarButton x:Name="abbRefresh" Icon="Refresh" Label="Refresh" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+            <AppBarButton x:Name="abbHome" Icon="Home" Label="Home" Foreground="White"/>
+            <AppBarButton x:Name="abbFullscreen" Icon="FullScreen" Label="Full Screen" Foreground="White" Visibility="Collapsed"/>
+        </CommandBar>        
+        <Grid x:Name="_Setting" Background="#FF3B5998" Canvas.ZIndex="1" Visibility="Visible">
+            <Grid x:Name="_SETTINGS_B" VerticalAlignment="Top" Height="50" BorderThickness="0" BorderBrush="Black">
+                <Button x:Name="btnSETTINGS_X" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"
+                    Width="50" Height="50" Background="Transparent" VerticalAlignment="Top" Margin="0" FontSize="22" Foreground="White" HorizontalAlignment="Right" Canvas.ZIndex="2"/>
+                <TextBlock x:Name="txtSETTINGSTitle" Margin="10,0" TextWrapping="Wrap" Text="TEXT" VerticalAlignment="Center" FontSize="24" Height="Auto" Foreground="White" />
+            </Grid>
+            <Pivot x:Name="PivotSettingsAbout" Margin="0,50,0,0" Foreground="White">
+                <PivotItem x:Name="_PivotSettings" Header="Settings" Foreground="White">
+                    <ScrollViewer x:Name="myScrollView_Settings" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="10,10,10,10" BorderThickness="2" BorderBrush="White" Foreground="White">
+                        <StackPanel>
+                            <StackPanel>
+                                <ToggleSwitch x:Name="FullScreen" Header="Full Screen" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <ToggleSwitch x:Name="BlockTopBar" Header="Lock Facebook bar" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <ToggleSwitch x:Name="ShowRecentNews" Header="Show Recent Posts" Foreground="White"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <ToggleSwitch x:Name="HideAds" Header="Hide Sponsored Posts" Foreground="White"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem x:Name="_PivotAbout" Header="About" Foreground="White">
+                        <StackPanel>
+                        <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png"/>
+                        <TextBlock x:Name="AppName" FontSize="20" TextWrapping="Wrap" Text="SlimBook UWP"/>
+                            <TextBlock  Name="version" Text="version"/>
+                            <TextBlock x:Name="privacy" TextWrapping="Wrap" Text="privacy"/>
+                    </StackPanel>
+                </PivotItem>
+                <PivotItem x:Name="_PivotCredits" Header="Credits" Foreground="White">
+                    <StackPanel>
+                        <TextBlock x:Name="developers" Text="Developers" FontSize="24"/>
+                        <HyperlinkButton x:Name="hyperDev" Content="Celestial Doom" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22"/>
+                        <Grid Height="50"/>
+                        <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png"/>
+                        <TextBlock Text="App Logo" TextWrapping="Wrap" FontSize="24"/>
+                        <HyperlinkButton x:Name="hyperLogo" Content="Icon Archive" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22"/>
+                        <TextBlock Text="Donations" TextWrapping="Wrap" FontSize="24" Visibility="Collapsed"/>
+                        <Button Content="Donations" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" Visibility="Collapsed"/>
+                    </StackPanel>
+                </PivotItem>
+            </Pivot>
+        </Grid>
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <ProgressRing x:Name="ProgRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="60" Foreground="#FF3B5998" Canvas.ZIndex="1" IsActive="True"/>
+            <WebView x:Name="facebookWebView"  Source="https://touch.facebook.com/home.php"/>
+        </Grid>
+    </Grid>
+</Page>
