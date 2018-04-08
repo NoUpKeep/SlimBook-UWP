@@ -14,7 +14,7 @@ Public NotInheritable Class MainPage
     Public PrivacyInfo As String = "No personal, or private, information of either you, or your device, is collected by this app." & vbCrLf & "Neither is ANY information transmitted by this app."
 
     Private Sub Home()
-        Dim mwv As Uri
+        Dim mwv As Uri 'Contains the source URL for Facebook Touch
         mwv = New Uri(MyWebViewSource & "?sk=h_chr")
         SlimBookUWPWebView.Navigate(New Uri(MyWebViewSource))
     End Sub
@@ -95,10 +95,6 @@ Public NotInheritable Class MainPage
         SettingsSetup()
     End Sub
 
-    Private Sub btnSETTINGS_X_Click(sender As Object, e As RoutedEventArgs) Handles btnSETTINGS_X.Click
-        _Setting.Visibility = Visibility.Collapsed
-    End Sub
-
     Private Sub SettingsSetup()
         Dim number As PackageVersion = Package.Current.Id.Version
         version.Text = String.Format(" {0}.{1}.{2}" & vbCrLf, number.Major, number.Minor, number.Build)
@@ -122,6 +118,10 @@ Public NotInheritable Class MainPage
 
     Private Async Sub abbUp_Click(sender As Object, e As RoutedEventArgs) Handles abbUp.Click
         Dim ScrollToTopString = "var int = setInterval(function(){window.scrollBy(0, -36); if( window.pageYOffset === 0 ) clearInterval(int); }, 0.1);"
-        Await myWebView.InvokeScriptAsync("eval", New String() {ScrollToTopString})
+        Await SlimBookUWPWebView.InvokeScriptAsync("eval", New String() {ScrollToTopString})
+    End Sub
+
+    Private Sub CloseGrid_Click(sender As Object, e As RoutedEventArgs) Handles CloseGrid.Click
+        _Setting.Visibility = Visibility.Collapsed
     End Sub
 End Class
