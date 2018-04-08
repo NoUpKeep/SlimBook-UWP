@@ -1,6 +1,8 @@
 # SlimBook UWP
 
 A 3rd Party UWP app for Windows 10 Mobile to allow the user to access Facebook. Small memory footprint, open source, and forever free. Not recomended for heavy users of Facebook.
+This app has the Facebook TOP BAR locked permanently, and I've removed ads.
+If anyone wants the ads added back in, I'll look into it.
 
 ## Getting Started
 
