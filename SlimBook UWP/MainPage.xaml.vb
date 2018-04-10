@@ -1,8 +1,8 @@
 ﻿' The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-Imports Windows.ApplicationModel.DataTransfer
-Imports Windows.ApplicationModel.Resources
+Imports Windows.Phone.UI.Input
 Imports Windows.UI.Popups
+
 ''' <summary>
 ''' An empty page that can be used on its own or navigated to within a Frame.
 ''' </summary>
@@ -13,29 +13,14 @@ Public NotInheritable Class MainPage
 
     Public PrivacyInfo As String = "No personal, or private, information of either you, or your device, is collected by this app." & vbCrLf & "Neither is ANY information transmitted by this app."
 
+    Sub BackPressed(sender As Object, e As BackPressedEventArgs)
+        Application.Current.Exit()
+    End Sub
+
     Private Sub Home()
         Dim mwv As Uri 'Contains the source URL for Facebook Touch
         mwv = New Uri(MyWebViewSource & "?sk=h_chr")
         SlimBookUWPWebView.Navigate(New Uri(MyWebViewSource))
-    End Sub
-
-    Private Async Sub CloseApp()
-        Dim loader = New ResourceLoader()
-        Dim exitDialog As String = loader.GetString("exitDialog")
-        Dim exitTitleDialog As String = loader.GetString("exitTitleDialog")
-        Dim yesCommand As String = loader.GetString("yesCommand")
-        Dim noCommand As String = loader.GetString("noCommand")
-        Dim appClosing As MessageDialog = New MessageDialog(exitDialog, exitTitleDialog)
-        appClosing.Commands.Add(New UICommand(yesCommand) With {
-                .Id = 0
-            })
-        appClosing.Commands.Add(New UICommand(noCommand) With {
-                .Id = 1
-            })
-        appClosing.DefaultCommandIndex = 0
-        appClosing.CancelCommandIndex = 1
-        Dim result = Await appClosing.ShowAsync()
-        If CInt(result.Id) = 0 Then Application.Current.[Exit]()
     End Sub
 
     Private Async Sub SlimBookUWPWebView_LoadCompleted(sender As Object, e As NavigationEventArgs) Handles SlimBookUWPWebView.LoadCompleted
@@ -101,8 +86,6 @@ Public NotInheritable Class MainPage
             SlimBookUWPWebView.GoBack()
         Else
             displayMessageAsync("Quit SlimBook UWP", "Are you sure you want to quit the app?", "")
-            'CloseApp()
-            'Application.Current.Exit()
         End If
     End Sub
 
@@ -142,4 +125,5 @@ Public NotInheritable Class MainPage
     Private Sub CloseGrid_Click(sender As Object, e As RoutedEventArgs) Handles CloseGrid.Click
         _Setting.Visibility = Visibility.Collapsed
     End Sub
+
 End Class
