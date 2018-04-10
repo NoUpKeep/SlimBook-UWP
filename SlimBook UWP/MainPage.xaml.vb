@@ -80,11 +80,29 @@ Public NotInheritable Class MainPage
         _Setting.Visibility = Visibility.Visible
     End Sub
 
-    Private Sub abbBack_Click(sender As Object, e As RoutedEventArgs) Handles abbBack.Click
+    Public Async Function displayMessageAsync(ByVal title As String, ByVal content As String, ByVal dialogType As String) As Task
+        Dim messageDialog = New MessageDialog(content, title)
+        If dialogType = "notification" Then
+        Else
+            messageDialog.Commands.Add(New UICommand("Yes", Nothing))
+            messageDialog.Commands.Add(New UICommand("No", Nothing))
+            messageDialog.DefaultCommandIndex = 0
+        End If
+
+        messageDialog.CancelCommandIndex = 1
+        Dim cmdResult = Await messageDialog.ShowAsync()
+        If cmdResult.Label = "Yes" Then
+            Application.Current.Exit()
+        End If
+    End Function
+
+    Private Async Sub abbBack_Click(sender As Object, e As RoutedEventArgs) Handles abbBack.Click
         If SlimBookUWPWebView.CanGoBack Then
             SlimBookUWPWebView.GoBack()
         Else
-            Application.Current.Exit()
+            displayMessageAsync("Quit SlimBook UWP", "Are you sure you want to quit the app?", "")
+            'CloseApp()
+            'Application.Current.Exit()
         End If
     End Sub
 
