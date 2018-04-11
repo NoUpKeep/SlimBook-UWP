@@ -36,8 +36,9 @@ Simple!
 
 ## Built With
 
-* [Visual Studio 2015](http://www.visualstudio.com/vs/) - The IDE used (Yeah, I wrote it in VB.net, so what?)
-* [Visual Studio 2017](http://www.visualstudio.com/vs/) - The IDE used (Yeah, I wrote it in VB.net, so what?)
+ [Visual Studio 2015](http://www.visualstudio.com/vs/) or [Visual Studio 2017](http://www.visualstudio.com/vs/)
+ 
+The IDE used (Yeah, I wrote it in VB.net, so what?)
 
 ## Authors
 
@@ -53,7 +54,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 - see th
 
 * CodeMaid [CodeMaid Visual Studio Extension] (http://www.codemaid.net/)
 * Icon Archive [Book Icon from Icon Archive](http://www.iconarchive.com/show/outline-icons-by-iconsmind/Book-icon.html)
-* SlimSocial for Facebook UWP - This was the inspiration for this app. [SlimSocial for Facebook UWP](https://github.com/rignaneseleo/SlimSocial-for-Facebook-UWP)
+* [SlimSocial for Facebook UWP](https://github.com/rignaneseleo/SlimSocial-for-Facebook-UWP) - This was the inspiration for this app. 
 * [Telerik Code Converter](http://converter.telerik.com/)
 * Hat tip to anyone who's code was used
 * Inspiration
