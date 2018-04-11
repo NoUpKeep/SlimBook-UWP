@@ -9,9 +9,7 @@ Imports Windows.UI.Popups
 Public NotInheritable Class MainPage
     Inherits Page
 
-    Public MyWebViewSource As String = "https://touch.facebook.com/home.php"
 
-    Public PrivacyInfo As String = "No personal, or private, information of either you, or your device, is collected by this app." & vbCrLf & "Neither is ANY information transmitted by this app."
 
     Sub BackPressed(sender As Object, e As BackPressedEventArgs)
         Application.Current.Exit()
@@ -37,6 +35,7 @@ Public NotInheritable Class MainPage
         Else
             abbBack.Label = "Back"
         End If
+        iconRotation.Stop()
         ProgRing.IsActive = False
     End Sub
 
@@ -47,15 +46,18 @@ Public NotInheritable Class MainPage
         Else View.ExitFullScreenMode()
         End If
         _Setting.Visibility = Visibility.Collapsed
+        iconRotation.Begin()
         ProgRing.IsActive = True
     End Sub
 
     Private Sub abbRefresh_Click(sender As Object, e As RoutedEventArgs) Handles abbRefresh.Click
+        iconRotation.Begin()
         ProgRing.IsActive = True
         SlimBookUWPWebView.Refresh()
     End Sub
 
     Private Sub abbHome_Click(sender As Object, e As RoutedEventArgs) Handles abbHome.Click
+        iconRotation.Begin()
         Home()
     End Sub
 
@@ -100,6 +102,8 @@ Public NotInheritable Class MainPage
         Dim number As PackageVersion = Package.Current.Id.Version
         version.Text = String.Format(" {0}.{1}.{2}" & vbCrLf, number.Major, number.Minor, number.Build)
         privacy.Text = PrivacyInfo
+        myScrollView.ChangeView(Nothing, 0, Nothing, True)
+        DevText.Text = DevNotes
     End Sub
 
     Private Async Sub hyperLogo_Click(sender As Object, e As RoutedEventArgs) Handles hyperLogo.Click
@@ -126,4 +130,7 @@ Public NotInheritable Class MainPage
         _Setting.Visibility = Visibility.Collapsed
     End Sub
 
+    Private Sub SlimBookUWPWebView_Loading(sender As FrameworkElement, args As Object) Handles SlimBookUWPWebView.Loading
+        iconRotation.Begin()
+    End Sub
 End Class
