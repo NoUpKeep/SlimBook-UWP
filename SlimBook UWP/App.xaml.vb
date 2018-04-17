@@ -31,9 +31,10 @@ NotInheritable Class App
 
         If Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar") Then
             Dim statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView()
-            statusBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 59, 89, 152)
-            statusBar.ForegroundColor = Windows.UI.Colors.White
-            statusBar.BackgroundOpacity = 1
+            statusBar.HideAsync
+            'statusBar.BackgroundColor = Windows.UI.Color.FromArgb(255, 59, 89, 152)
+            'statusBar.ForegroundColor = Windows.UI.Colors.White
+            'statusBar.BackgroundOpacity = 1
         End If
 
         If e.PrelaunchActivated = False Then

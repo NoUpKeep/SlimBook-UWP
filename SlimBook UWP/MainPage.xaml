@@ -6,71 +6,78 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.Resources>
-        <Storyboard x:Name="iconRotation" AutoReverse="False" RepeatBehavior="Forever">
-            <DoubleAnimation Duration="0:0:1" To="360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="refreshIcon" />
-        </Storyboard>
-    </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
-        <CommandBar VerticalAlignment="Bottom" Background="#FF3B5998" Foreground="White" Canvas.ZIndex="1">
-            <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="abbAbout" Label="About" Foreground="White" Background="#FF3B5998" />
-                <AppBarButton x:Name="abbOpenSource" Label="Github" Foreground="White" Background="#FF3B5998" />
-            </CommandBar.SecondaryCommands>
-            <CommandBar.Content>
-                <Grid />
-            </CommandBar.Content>
-            <AppBarButton x:Name="abbBack" Icon="Back" Label="Back" Foreground="White" />
-            <AppBarButton x:Name="abbUp" Icon="Up" Label="Top" Foreground="White" />
-            <AppBarButton x:Uid="refreshButton" x:Name="abbRefresh" RenderTransformOrigin="0.5,0.5" Foreground="White" Label="Refresh" >
-                <AppBarButton.Icon>
-                    <SymbolIcon x:Name="refreshIcon"  Symbol="Refresh" RenderTransformOrigin="0.5,0.5" >
-                        <SymbolIcon.RenderTransform>
-                            <CompositeTransform/>
-                        </SymbolIcon.RenderTransform>
-                    </SymbolIcon>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Name="abbHome" Icon="Home" Label="Home" Foreground="White" />
-            <AppBarButton x:Name="abbFullscreen" Icon="FullScreen" Label="Full Screen" Foreground="White" Visibility="Collapsed" />
-        </CommandBar>
-        <Grid x:Name="_Setting" Background="Black" Canvas.ZIndex="1" Visibility="Collapsed" Margin="10,10,10,10">
-            <Grid x:Name="_SETTINGS_B" VerticalAlignment="Top" Height="50" BorderThickness="0" BorderBrush="Black">
-                <TextBlock x:Name="txtSETTINGSTitle" Margin="10,0" TextWrapping="Wrap" Text="TEXT" VerticalAlignment="Center" FontSize="24" Height="Auto" Foreground="White" />
-                <Button x:Name="CloseGrid" Content="&#xE711;" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0" FontSize="24" Foreground="White" Background="#00000000" Canvas.ZIndex="2" />
+    
+    
+    
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False"
+               CompactPaneLength="50" OpenPaneLength="180">
+        <SplitView.Pane>
+            <StackPanel Background="#FF3B5998" Margin="0,0,-6,0">
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Foreground="White" />
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="Back" FontFamily="Segoe MDL2 Assets" Content="&#xE72B;"
+                    Width="50" Height="50" Background="Transparent" Foreground="White" />
+                    <TextBlock x:Name="txtBackBtn" Text="Back" FontSize="18" VerticalAlignment="Center" Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="Top" FontFamily="Segoe MDL2 Assets" Content="&#xE898;"
+                        Width="50" Height="50" Background="Transparent" Foreground="White" />
+                    <TextBlock Text="Top" FontSize="18" VerticalAlignment="Center" Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="About" FontFamily="Segoe MDL2 Assets" Content="&#xE897;"
+                        Width="50" Height="50" Background="Transparent" Foreground="White" />
+                    <TextBlock Text="About" FontSize="18" VerticalAlignment="Center" Foreground="White" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="GitHub" FontFamily="Segoe MDL2 Assets" Content="&#xE774;"
+                        Width="50" Height="50" Background="Transparent" Foreground="White" />
+                    <TextBlock Text="GitHub" FontSize="18" VerticalAlignment="Center" Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="39*"/>
+                    <RowDefinition Height="281*"/>
+                </Grid.RowDefinitions>
+                <ProgressRing x:Name="ProgRing" Width="50" Height="50" HorizontalAlignment="Center" Margin="130,217,130,295" Grid.Row="1" />
+                <Button x:Name="Home" Content="&#xE80F;" FontFamily="Segoe MDL2 Assets" Foreground="Black" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White" Canvas.ZIndex="1" FontSize="24" BorderBrush="Black" Margin="0,0,5,5" Padding="4,4,4,4" BorderThickness="1,1,1,1" Grid.Row="1" />
+                <WebView x:Name="SlimBookUWPWebView" Source="https://touch.facebook.com/home.php" Grid.RowSpan="2" />
+                <Grid x:Name="Info" Margin="5,5,5,5" Visibility="Collapsed" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="5,5,5,5" Canvas.ZIndex="2" Grid.RowSpan="2">
+                    <Button x:Name="CloseGrid" Content="&#xE711;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Canvas.ZIndex="1" Background="#00000000" FontFamily="Segoe MDL2 Assets" />
+                    <Pivot x:Name="PivotSettingsAbout" Foreground="White" Background="#FF3B5998" Margin="0,-2,0,0">
+                        <PivotItem x:Name="_PivotAbout" Header="About" Foreground="White">
+                            <StackPanel>
+                                <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
+                                <TextBlock x:Name="AppName" FontSize="20" TextWrapping="Wrap" Text="SlimBook UWP" />
+                                <TextBlock  Name="version" Text="version" />
+                            </StackPanel>
+                        </PivotItem>
+                        <PivotItem x:Name="_PivotCredits" Header="Credits" Foreground="White">
+                            <StackPanel>
+                                <TextBlock x:Name="developers" Text="Developers" FontSize="24" />
+                                <HyperlinkButton x:Name="hyperDev" Content="Celestial Doom" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Visibility="Visible" Foreground="White" FontWeight="Bold" />
+                                <Grid Height="50" />
+                                <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
+                                <TextBlock Text="App Logo" TextWrapping="Wrap" FontSize="24" />
+                                <HyperlinkButton x:Name="hyperLogo" Content="Icon Archive" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" FontWeight="Bold" />
+                                <TextBlock Text="Donations" TextWrapping="Wrap" FontSize="24" Visibility="Collapsed" />
+                                <Button Content="Donations" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" Visibility="Collapsed" />
+                            </StackPanel>
+                        </PivotItem>
+                        <PivotItem x:Name="_PivotPrivacy" Header="Privacy" Foreground="White">
+                            <Grid Margin="0">
+                                <ScrollViewer x:Name="myScrollView" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="5,5,5,5" BorderBrush="#FFA0A0A0">
+                                    <TextBlock x:Name="privacy" TextWrapping="Wrap" Text="privacy" />
+                                </ScrollViewer>
+                            </Grid>
+                        </PivotItem>
+                    </Pivot>
+                </Grid>
             </Grid>
-            <Pivot x:Name="PivotSettingsAbout" Margin="0,50,0,0" Foreground="White" Background="Black">
-                <PivotItem x:Name="_PivotAbout" Header="About" Foreground="White">
-                    <StackPanel>
-                        <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
-                        <TextBlock x:Name="AppName" FontSize="20" TextWrapping="Wrap" Text="SlimBook UWP" />
-                        <TextBlock  Name="version" Text="version" />
-                        <TextBlock x:Name="privacy" TextWrapping="Wrap" Text="privacy" />
-                    </StackPanel>
-                </PivotItem>
-                <PivotItem x:Name="_PivotCredits" Header="Credits" Foreground="White">
-                    <StackPanel>
-                        <TextBlock x:Name="developers" Text="Developers" FontSize="24" />
-                        <HyperlinkButton x:Name="hyperDev" Content="Celestial Doom" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" />
-                        <Grid Height="50" />
-                        <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
-                        <TextBlock Text="App Logo" TextWrapping="Wrap" FontSize="24" />
-                        <HyperlinkButton x:Name="hyperLogo" Content="Icon Archive" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" />
-                        <TextBlock Text="Donations" TextWrapping="Wrap" FontSize="24" Visibility="Collapsed" />
-                        <Button Content="Donations" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" Visibility="Collapsed" />
-                    </StackPanel>
-                </PivotItem>
-                <PivotItem x:Name="PivotDevNotes" Header="Dev Notes">
-                    <ScrollViewer x:Name="myScrollView" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="1,1,1,1" BorderBrush="#FFA0A0A0">
-                        <TextBlock x:Name="DevText" Margin="0" TextWrapping="Wrap" Text="TEXT" VerticalAlignment="Top" FontSize="24" Foreground="White" />
-                    </ScrollViewer>
-                </PivotItem>
-            </Pivot>
-        </Grid>
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <ProgressRing x:Name="ProgRing" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="60" Foreground="#FF3B5998" Canvas.ZIndex="1" IsActive="True" Visibility="Collapsed" />
-            <WebView x:Name="SlimBookUWPWebView"  Source="https://touch.facebook.com/home.php" Margin="0,0,0,48" />
-        </Grid>
-    </Grid>
+        </SplitView.Content>
+    </SplitView>
 </Page>
