@@ -15,6 +15,8 @@ __SlimBook UWP Privacy__
 No personal, or private, information of either you, or your device, is collected by this app.
 
 Neither is ANY information transmitted by this app.
+***
+Now available in the [Windows Store](https://www.microsoft.com/store/apps/9P4S56MZPPMW)
 
 ## Getting Started
 
