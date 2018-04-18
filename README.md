@@ -46,7 +46,7 @@ The IDE used (Yeah, I wrote it in VB.net, so what?)
 
 * **Celestial Doom** - *Initial work* - [CelestialDoom](https://github.com/CelestialDoom)
 
-See also the list of [contributors](https://github.com/CelestialDoom/AllPonyRadioApp_10/contributors) who participated in this project (When one gets added).
+See also the list of [contributors](https://github.com/CelestialDoom/SlimBook-UWP/contributors) who participated in this project (When one gets added).
 
 ## License
 
