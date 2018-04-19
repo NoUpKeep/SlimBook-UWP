@@ -11,6 +11,9 @@ Imports Windows.UI.Core
 Public NotInheritable Class MainPage
     Inherits Page
 
+    Public localSettings As Windows.Storage.ApplicationDataContainer = Windows.Storage.ApplicationData.Current.LocalSettings
+    Public SetFullScreen As Object = localSettings.Values("FullScreen")
+
     Async Sub BackPressed(sender As Object, e As BackPressedEventArgs)
         Dim AppName As String = Package.Current.DisplayName
         'Handles any Back button presses.
@@ -65,10 +68,12 @@ Public NotInheritable Class MainPage
             View.ExitFullScreenMode()
             FS.Icon = New SymbolIcon(Symbol.FullScreen)
             FS.Label = "Fullscreen"
+            localSettings.Values("FullScreen") = "0"
         Else
             View.TryEnterFullScreenMode()
             FS.Icon = New SymbolIcon(Symbol.BackToWindow)
             FS.Label = "Exit Fullscreen"
+            localSettings.Values("FullScreen") = "1"
         End If
     End Sub
 
@@ -101,9 +106,33 @@ Public NotInheritable Class MainPage
         Info.Visibility = Visibility.Collapsed
         Me.InitializeComponent()
         AddHandler HardwareButtons.BackPressed, AddressOf BackPressed
-        If localSettings.Values.ContainsKey("fullScreen") Then
-            If CBool(localSettings.Values("fullScreen")) Then View.TryEnterFullScreenMode()
-        Else View.ExitFullScreenMode()
+        If SetFullScreen Is Nothing Then
+            localSettings.Values("FullScreen") = "0"
+        Else
+            If SetFullScreen = "0" Then
+                View.ExitFullScreenMode()
+                FS.Icon = New SymbolIcon(Symbol.FullScreen)
+                FS.Label = "Fullscreen"
+                togg_FS.IsOn = False
+            Else
+                View.TryEnterFullScreenMode()
+                FS.Icon = New SymbolIcon(Symbol.BackToWindow)
+                FS.Label = "Exit Fullscreen"
+                togg_FS.IsOn = True
+            End If
+        End If
+        If LockCommBar Is Nothing Then
+            localSettings.Values("LockCommBar") = "0"
+            CommBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact
+            togg_CB.IsOn = False
+        Else
+            If LockCommBar = "0" Then
+                CommBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact
+                togg_CB.IsOn = False
+            Else
+                CommBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal
+                togg_CB.IsOn = True
+            End If
         End If
         Go_Home()
         AddHandler SystemNavigationManager.GetForCurrentView().BackRequested, Sub(s, a)
@@ -138,4 +167,43 @@ Public NotInheritable Class MainPage
         SlimBookUWPWebView.NavigateToString(noConnection)
     End Sub
 
+    Private Sub SETTINGS_Click(sender As Object, e As RoutedEventArgs) Handles Settings.Click
+        SettingsGrid.Visibility = Visibility.Visible
+        Dim number As PackageVersion = Package.Current.Id.Version
+        CAV.Text = "Current App Version: " & String.Format(" {0}.{1}.{2}" & vbCrLf, number.Major, number.Minor, number.Build)
+    End Sub
+
+    Private Sub CloseSettings_Click(sender As Object, e As RoutedEventArgs) Handles CloseSettings.Click
+        SettingsGrid.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub togg_FS_Toggled(sender As Object, e As RoutedEventArgs) Handles togg_FS.Toggled
+        Dim toggleSwitch As ToggleSwitch = TryCast(sender, ToggleSwitch)
+        If toggleSwitch IsNot Nothing Then
+            If toggleSwitch.IsOn = True Then
+                View.TryEnterFullScreenMode()
+                FS.Icon = New SymbolIcon(Symbol.BackToWindow)
+                FS.Label = "Exit Fullscreen"
+                localSettings.Values("FullScreen") = "1"
+            Else
+                View.ExitFullScreenMode()
+                FS.Icon = New SymbolIcon(Symbol.FullScreen)
+                FS.Label = "Fullscreen"
+                localSettings.Values("FullScreen") = "0"
+            End If
+        End If
+    End Sub
+
+    Private Sub togg_CB_Toggled(sender As Object, e As RoutedEventArgs) Handles togg_CB.Toggled
+        Dim toggleSwitch As ToggleSwitch = TryCast(sender, ToggleSwitch)
+        If toggleSwitch IsNot Nothing Then
+            If toggleSwitch.IsOn = True Then
+                CommBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact
+                localSettings.Values("LockCommBar") = "1"
+            Else
+                CommBar.ClosedDisplayMode = AppBarClosedDisplayMode.Minimal
+                localSettings.Values("LockCommBar") = "0"
+            End If
+        End If
+    End Sub
 End Class
