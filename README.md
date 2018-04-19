@@ -15,6 +15,8 @@ __SlimBook UWP Privacy__
 No personal, or private, information of either you, or your device, is collected by this app.
 
 Neither is ANY information transmitted by this app.
+***
+Now available in the [Windows Store](https://www.microsoft.com/store/apps/9P4S56MZPPMW)
 
 ## Getting Started
 
@@ -44,7 +46,7 @@ The IDE used (Yeah, I wrote it in VB.net, so what?)
 
 * **Celestial Doom** - *Initial work* - [CelestialDoom](https://github.com/CelestialDoom)
 
-See also the list of [contributors](https://github.com/CelestialDoom/AllPonyRadioApp_10/contributors) who participated in this project (When one gets added).
+See also the list of [contributors](https://github.com/CelestialDoom/SlimBook-UWP/contributors) who participated in this project (When one gets added).
 
 ## License
 
