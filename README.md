@@ -48,6 +48,14 @@ The IDE used (Yeah, I wrote it in VB.net, so what?)
 
 See also the list of [contributors](https://github.com/CelestialDoom/SlimBook-UWP/contributors) who participated in this project (When one gets added).
 
+## Donate
+
+I do all this work for free, if you'd like to [donate to me](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=C8GGT76WWEKPY&lc=GB&item_name=APRA%2etech&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) (a cup of coffee, or a pint of hard cider), I'd be mighty appreciative.
+
+Any donators will be mentioned in the about section of the app.
+
+
+
 ## License
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 - see the [LICENSE](LICENSE) file for details
