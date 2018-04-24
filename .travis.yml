@@ -1,3 +1,2 @@
-language: csharp
+language: visual basic
 solution: SlimBook UWP.sln
-mono: none
