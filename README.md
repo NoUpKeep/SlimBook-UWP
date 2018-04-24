@@ -1,5 +1,7 @@
 ![SlimBook UWP Logo](https://s19.postimg.cc/jnd0jxodv/Book-icon.png)
 # SlimBook UWP
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-3.0/)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 SlimBook UWP is a UWP app for Windows 10 Mobile to allow the user to access Facebook.
 
