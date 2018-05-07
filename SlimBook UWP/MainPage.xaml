@@ -7,13 +7,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Storyboard x:Name="iconRotation" AutoReverse="False" RepeatBehavior="Forever">
+            <DoubleAnimation Duration="0:0:1" To="360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="refreshIcon" />
+        </Storyboard>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <WebView x:Name="SlimBookUWPWebView" Source="https://touch.facebook.com/home.php" Margin="50,0,0,0" />
-        <Grid x:Name="G_SETTINGS" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="5,5,5,5" Canvas.ZIndex="1" Background="#FF3B5998" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Height="356" Width="251" Margin="50,0,0,0">
+        <WebView x:Name="SlimBookUWPWebView" Source="https://touch.facebook.com/home.php" />
+        <Grid x:Name="SettingsGrid" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="5,5,5,5" Canvas.ZIndex="1" Background="#FF3B5998" Visibility="Collapsed">
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="Settings" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="22" />
-            <Button x:Name="CS" Content="&#xE711;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Canvas.ZIndex="1" Background="#00000000" FontFamily="Segoe MDL2 Assets" />
+            <Button x:Name="CloseSettings" Content="&#xE711;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Canvas.ZIndex="1" Background="#00000000" FontFamily="Segoe MDL2 Assets" />
             <Grid Margin="2,44,2,2">
-                <ScrollViewer x:Name="MSV_SETTINGS" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="5,5,5,5" BorderBrush="#FFA0A0A0">
+                <ScrollViewer x:Name="myScrollViewSettings" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="5,5,5,5" BorderBrush="#FFA0A0A0">
                     <Grid>
                         <StackPanel>
                             <StackPanel>
@@ -28,6 +34,9 @@
                             <StackPanel>
                                 <ToggleSwitch x:Name="togg_FS" Header="Lock fullscreen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" />
                             </StackPanel>
+                            <StackPanel>
+                                <ToggleSwitch x:Name="togg_CB" Header="Lock Command Bar" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Visible" />
+                            </StackPanel>
                             <StackPanel Height="25" />
                             <StackPanel>
                                 <TextBlock x:Name="CAV" Text="Current App Version: " Foreground="White" />
@@ -37,102 +46,56 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <Grid x:Name="G_ABOUT" VerticalAlignment="Center" Background="#FF3B5998" BorderBrush="Black" BorderThickness="2,0,2,2" CornerRadius="5,5,5,5" Height="356" Width="251" HorizontalAlignment="Center" Visibility="Collapsed" Margin="50,0,0,0">
-            <Button x:Name="CA" Content="&#xE711;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Canvas.ZIndex="1" Background="#00000000" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" />
-            <Pivot x:Name="PivotSettingsAbout" Foreground="White" Background="{x:Null}" Margin="2,39,2,2">
+        <Grid x:Name="Info" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="5,5,5,5" Canvas.ZIndex="1" Visibility="Collapsed">
+            <Button x:Name="CloseGrid" Content="&#xE711;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Canvas.ZIndex="1" Background="#00000000" FontFamily="Segoe MDL2 Assets" />
+            <Pivot x:Name="PivotSettingsAbout" Foreground="White" Background="#FF3B5998" Margin="0,-2,0,0">
                 <PivotItem x:Name="_PivotAbout" Header="About" Foreground="White">
                     <StackPanel>
                         <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
-                        <TextBlock x:Name="AN" FontSize="20" TextWrapping="Wrap" Text="The Unofficial Amazon App" Foreground="White" />
-                        <StackPanel Height="12" />
-                        <TextBlock  Name="version" Text="version" Foreground="White" />
+                        <TextBlock x:Name="AppName" FontSize="20" TextWrapping="Wrap" Text="SlimBook UWP" />
+                        <TextBlock  Name="version" Text="version" />
                     </StackPanel>
                 </PivotItem>
                 <PivotItem x:Name="_PivotCredits" Header="Credits" Foreground="White">
-                    <ScrollViewer x:Name="SVC" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="0,5,0,5" BorderBrush="#FFA0A0A0">
-                        <Grid>
-                            <StackPanel>
-                                <TextBlock x:Name="developers" Text="Developers" FontSize="24" Foreground="White" />
-                                <HyperlinkButton x:Name="hyperDev" Content="Celestial Doom" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Visibility="Visible" Foreground="White" FontWeight="Bold" />
-                                <Grid Height="50" />
-                                <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
-                                <TextBlock Text="App Logo" TextWrapping="Wrap" FontSize="24" Foreground="White" />
-                                <HyperlinkButton x:Name="hyperLogo" Content="Icon Archive" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" FontWeight="Bold" />
-                                <TextBlock Text="Donations" TextWrapping="Wrap" FontSize="24" Visibility="Collapsed" />
-                                <Button Content="Donations" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" Visibility="Collapsed" />
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
+                    <StackPanel>
+                        <TextBlock x:Name="developers" Text="Developers" FontSize="24" />
+                        <HyperlinkButton x:Name="hyperDev" Content="Celestial Doom" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Visibility="Visible" Foreground="White" FontWeight="Bold" />
+                        <Grid Height="50" />
+                        <Image Height="100" HorizontalAlignment="Left" Source="Assets/Square44x44Logo.targetsize-256.png" />
+                        <TextBlock Text="App Logo" TextWrapping="Wrap" FontSize="24" />
+                        <HyperlinkButton x:Name="hyperLogo" Content="Icon Archive" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" FontWeight="Bold" />
+                        <TextBlock Text="Donations" TextWrapping="Wrap" FontSize="24" Visibility="Collapsed" />
+                        <Button Content="Donations" HorizontalAlignment="Left" VerticalAlignment="Stretch" FontSize="22" Foreground="White" Visibility="Collapsed" />
+                    </StackPanel>
                 </PivotItem>
                 <PivotItem x:Name="_PivotPrivacy" Header="Privacy" Foreground="White">
-                    <ScrollViewer x:Name="SVP" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="0,5,0,5" BorderBrush="#FFA0A0A0">
-                        <Grid>
-                            <TextBlock x:Name="privacy" TextWrapping="Wrap" Text="privacy" FontSize="16" Foreground="White" />
-                        </Grid>
-                    </ScrollViewer>
+                    <Grid Margin="0">
+                        <ScrollViewer x:Name="myScrollView" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="5,5,5,5" BorderBrush="#FFA0A0A0">
+                            <TextBlock x:Name="privacy" TextWrapping="Wrap" Text="privacy" />
+                        </ScrollViewer>
+                    </Grid>
                 </PivotItem>
             </Pivot>
         </Grid>
-        <Grid x:Name="SIDEBAR" HorizontalAlignment="Left" Width="50" Background="#FF3B5998">
-            <StackPanel x:Name="OPEN" Orientation="Horizontal" VerticalAlignment="Top">
-                <Grid Width="50" Height="50">
-                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE700;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                </Grid>
-            </StackPanel>
-            <ScrollViewer x:Name="SV_SB" IsTabStop="True" VerticalScrollBarVisibility="Auto" Margin="0,50,0,0" BorderBrush="#FFA0A0A0">
-                <Grid>
-                    <StackPanel HorizontalAlignment="Stretch">
-                        <StackPanel x:Name="HOME" Orientation="Horizontal" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE80F;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="Home" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                        <StackPanel Height="12" />
-                        <StackPanel x:Name="TOP" Orientation="Horizontal" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE898;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="Top of Page" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                        <StackPanel Height="12" />
-                        <StackPanel x:Name="BACK" Orientation="Horizontal" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE72B;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="Go Back" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                        <StackPanel Height="12" />
-                        <StackPanel x:Name="ABOUT" Orientation="Horizontal" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE897;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="About" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                        <StackPanel Height="12" />
-                        <StackPanel x:Name="GITHUB" Orientation="Horizontal" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE774;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="GitHub" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                        <StackPanel Height="12" />
-                        <StackPanel x:Name="QUIT" Orientation="Horizontal" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE750;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="Exit App" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                        <StackPanel Height="12" />
-                        <StackPanel x:Name="SETTINGS" Orientation="Horizontal" VerticalAlignment="Bottom" Height="50">
-                            <Grid Width="50">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE713;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" />
-                            </Grid>
-                            <TextBlock Text="Settings" FontSize="18" VerticalAlignment="Center" Foreground="White" />
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
-        </Grid>
+        <CommandBar x:Name="CommBar" Background="#FF3B5998" Foreground="White" VerticalAlignment="Bottom" BorderBrush="White" ClosedDisplayMode="Minimal">
+            <AppBarButton x:Name="BACK" Icon="Back" Label="Back" Foreground="White" />
+            <AppBarButton x:Name="TOP" Icon="Upload" Label="Top" Foreground="White" />
+            <AppBarButton x:Uid="refreshButton" x:Name="REFRESH" RenderTransformOrigin="0.5,0.5" Label="Refresh" Foreground="White">
+                <AppBarButton.Icon>
+                    <SymbolIcon x:Name="refreshIcon"  Symbol="Refresh" RenderTransformOrigin="0.5,0.5">
+                        <SymbolIcon.RenderTransform>
+                            <CompositeTransform />
+                        </SymbolIcon.RenderTransform>
+                    </SymbolIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="HOME" Icon="Home" Label="Home" Foreground="White" />
+            <AppBarButton x:Name="FS" Icon="FullScreen" Label="Fullscreen" Foreground="White" Background="#FF3B5998" />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="SETTINGS" Icon="Setting" Label="Settings" />
+                <AppBarButton x:Name="ABOUT" Icon="Help" Label="About" />
+                <AppBarButton x:Name="GITHUB" Icon="Globe" Label="GitHub" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
     </Grid>
 </Page>
