@@ -1,4 +1,4 @@
-![SlimBook UWP Logo](https://s19.postimg.cc/jnd0jxodv/Book-icon.png)
+![SlimBook UWP Logo](https://s19.postimg.cc/docfbdgyr/App_Tile_Icon_v2.png)
 # SlimBook UWP
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
