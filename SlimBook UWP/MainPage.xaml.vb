@@ -3,6 +3,7 @@
 Imports Windows.ApplicationModel.Resources
 Imports Windows.Phone.UI.Input
 Imports Windows.UI.Core
+Imports Windows.UI.Notifications
 
 ''' <summary>
 ''' An empty page that can be used on its own or navigated to within a Frame.
@@ -21,6 +22,15 @@ Public NotInheritable Class MainPage
             SlimBookUWPWebView.GoBack()
         Else
             Await displayMessageAsync(AppName, "Are you sure you want to exit the app?", "")
+        End If
+    End Sub
+
+    Public Sub dispatcherTimer_Tick(ByVal sender As Object, ByVal e As EventArgs)
+        POPUPTMR += 1
+        If POPUPTMR = 5 Then
+            POPUP.Visibility = Visibility.Collapsed
+            POPUPTMR = 0
+            dt.Stop()
         End If
     End Sub
 
@@ -46,6 +56,11 @@ Public NotInheritable Class MainPage
 
     Private Sub CommBar_SizeChanged(sender As Object, e As SizeChangedEventArgs) Handles CommBar.SizeChanged
         SlimBookUWPWebView.Margin = New Thickness(0, 0, 0, CommBar.ActualHeight)
+    End Sub
+
+    Private Async Sub QUIT_Click(sender As Object, e As RoutedEventArgs) Handles QUIT.Click
+        Dim AppName As String = Package.Current.DisplayName
+        Await displayMessageAsync(AppName, "Are you sure you want to exit the app?", "")
     End Sub
 
     Private Sub FS_Click(sender As Object, e As RoutedEventArgs) Handles FS.Click
@@ -93,6 +108,8 @@ Public NotInheritable Class MainPage
         Me.InitializeComponent()
         AddHandler HardwareButtons.BackPressed, AddressOf BackPressed
         SlimBookUWPWebView.Margin = New Thickness(0, 0, 0, CommBar.ActualHeight)
+        dt.Interval = New TimeSpan(0, 0, 1)
+        AddHandler dt.Tick, AddressOf dispatcherTimer_Tick
         If SetFullScreen Is Nothing Then
             localSettings.Values("FullScreen") = "0"
         Else
@@ -247,6 +264,9 @@ Public NotInheritable Class MainPage
         If toggleSwitch IsNot Nothing Then
             If toggleSwitch.IsOn = True Then
                 localSettings.Values("LockTopBar") = "1"
+                POPUPTXT.Text = "Please restart app to take effect"
+                POPUP.Visibility = Visibility.Visible
+                dt.Start()
             Else
                 localSettings.Values("LockTopBar") = "0"
             End If
