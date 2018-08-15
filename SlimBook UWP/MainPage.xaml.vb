@@ -107,6 +107,7 @@ Public NotInheritable Class MainPage
         Info.Visibility = Visibility.Collapsed
         Me.InitializeComponent()
         AddHandler HardwareButtons.BackPressed, AddressOf BackPressed
+        UserAgentHelper.SetDefaultUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36")
         SlimBookUWPWebView.Margin = New Thickness(0, 0, 0, CommBar.ActualHeight)
         dt.Interval = New TimeSpan(0, 0, 1)
         AddHandler dt.Tick, AddressOf dispatcherTimer_Tick
